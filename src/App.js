@@ -57,7 +57,9 @@ class App extends React.Component {
 
 componentDidMount() {
   let arreglo = []
-  fetch("http://localhost:3001/api/plataformas")
+ // let url = "http://localhost:3001/"
+ let url = "https://pruebabvcback.herokuapp.com/"
+  fetch(url + "api/plataformas")
       .then((res) => res.json())
       .then((json) => {
           json.map((item) => {
@@ -73,7 +75,7 @@ componentDidMount() {
       
          })
 
-         fetch("http://localhost:3001/api/eventos")
+         fetch(url + "api/eventos")
          .then((res) => res.json())
          .then((json) => {
           this.setState({
@@ -82,7 +84,7 @@ componentDidMount() {
         });
             })
 
-            fetch("http://localhost:3001/api/registros")
+            fetch(url + "api/registros")
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
