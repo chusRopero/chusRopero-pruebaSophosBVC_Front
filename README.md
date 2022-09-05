@@ -1,3 +1,70 @@
+CHALLENGE DESARROLLO BVC
+---------------------------
+Solución 
+---------------------------
+
+1.	Para almacenar la información se creó un base de datos Mongo Atlas (nube) Se plantearon 3 colecciones o tablas para almacenar la información:
+
+-	Plataformas: con los campos;
+<plataforma>  el identificado, la sigla 
+<descripción> detalle de la plataforma 
+
+-	Eventos: con los campos; 
+<evento>  id del evento  
+<descripción>  descripción del evento
+<valor>  valor del  evento
+
+-	Registros:  con los campos; 
+<plataforma>  el id de  la plataforma 
+<evento>  id del evento 
+<cantidad>  cantidad de eventos
+<costos>  costo de los eventos según la cantidad y valor
+<fecha>  fecha de registro del evento
+
+2.	BackEnd:
+El back se desarrollo en node js, consiste un servicio con 4 endPoint´s .
+
+-	El primer endPoint  url/api/plataformas : GET  nos lista las 5 plataformas y podemos usarla para alimentar en forma dinámica el selector para escoger la plataforma.
+
+-	El segundo endPonit url/api/eventos :  GET nos lista los diferentes eventos, con ella podemos, a la hora de insertar el registro calcular el total o mostrar la descripción a la hora de listar.
+
+-	El tercer endPonit url/api/registros GET nos lista todos los registro de los eventos digitales, con un “JOIN” a eventos nos muestra también la descripción  y valor  por evento a mostrar.
+ 
+-	El cuarto  endPonit url/api/registros POST con el podemos agregar o registrar un evento usando una firma del endPonit con el json:
+-	 {
+-	        "plataforma": "PLATGI",
+-	        "evento": "F005",
+-	        "cantidad": "10"
+-	 }
+
+Los campos <fecha> lo agrega desde el back a la hora del registro y el campo <costos> lo calcula con base a un “JOIN” entre las colecciones <registros> y <eventos> por medio del campo <evento> 
+	
+
+3.	FrontEnd :
+El front se desarrolló  en react js, lista los registros filtrando por plataforma y usando un selector, Se consumen los diferentes endPoint’s, con el servicio de plataformas se “alimenta” el arreglo < plataformas: []> que usa el componente  <selector>  para listar las plataformas. Y el servicio de registros alimenta el arreglo <registros: []> con todos los registros; 
+ 
+Una vez el usuario escoge una plataforma con el “idPlataforma” lo asignamos a estado “itemFiltro”, y al hacer click sobre   el botón <consultar> se hace un filtro al arreglo registros basado en  “itemFiltro”,  y crea un arreglo <filtradas: []> este último arreglo se le asigna a componente <Elemento> que pinta los datos según el requerimiento.    
+
+
+NOTA: los servicios están funciones en Heroku
+
+url:   https://pruebabvcback.herokuapp.com
+GET
+https://pruebabvcback.herokuapp.com/api/registros
+https://pruebabvcback.herokuapp.com/api/eventos
+https://pruebabvcback.herokuapp.com/api/plataformas
+
+POST
+https://pruebabvcback.herokuapp.com/api/registros
+ {
+        "plataforma": "PLATGI",
+        "evento": "F005",
+        "cantidad": "10"
+        }
+
+
+//------------------------------------------------------------
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -13,58 +80,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
